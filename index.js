@@ -1,6 +1,11 @@
 const express = require('express');
+const { getApi, postApi } = require('./controller/controller')
 
 const app = express()
+
+//body parser
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true }));
 
 app.listen(4000, (err, data) => {
     if (err) { }
@@ -10,11 +15,10 @@ app.listen(4000, (err, data) => {
 const ValidateName = (req, res, next) => {
     setTimeout(() => {
         return next();
-    }, 2000);
+    }, 4000);
 }
 
-app.get('/name', ValidateName, (req, res, next) => {
-    console.log("posting name")
-    res.json({ name: "Aniket", id: "2" })
-})
+app.get('/',ValidateName,getApi)
+
+app.post('/',postApi)
 
